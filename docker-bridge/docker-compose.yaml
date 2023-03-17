@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    rosbridge_noetic_humble:
+        privileged: true
+        image: "unhcarl/rosbridge-noetic-humble:latest"
+        network_mode: host
+        environment:
+            - ROS_MASTER_URI=$ROS_MASTER_URI
+            - ROS_IP=$ROS_IP
+            - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+            - DISPLAY=$DISPLAY
+        volumes:
+            - /tmp/.X11-unix/:/tmp/.X11-unix/
+        #tty: true
+        command: ros2 run ros1_bridge dynamic_bridge
+           
