@@ -1,21 +1,18 @@
 version: '3'
-
 services:
     rosbridge_noetic_humble:
         privileged: true
         image: "unhcarl/sawyer-noetic:latest"
         network_mode: host
-        ipc: host
-        pid: host
         environment:
             - ROS_MASTER_URI=$ROS_MASTER_URI
             - ROS_IP=$ROS_IP
             - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
             - DISPLAY=$DISPLAY
+            - FASTRTPS_DEFAULT_PROFILES_FILE=/profile/fastrtps_default_profiles.xml
         volumes:
             - /tmp/.X11-unix/:/tmp/.X11-unix/
-        tty: true
-        #command: ros2 run ros1_bridge dynamic_bridge
-           
-           
-           
+            - ./profile:/profile
+        #tty: true
+        command: ros2 run ros1_bridge dynamic_bridge
+
