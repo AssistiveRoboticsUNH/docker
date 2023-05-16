@@ -18,8 +18,8 @@ RUN git clone -b master https://github.com/RethinkRobotics/intera_sdk.git
 RUN git clone -b master https://github.com/RethinkRobotics/intera_common.git
 RUN git clone -b main https://github.com/ros-drivers/joystick_drivers.git
 WORKDIR $ROS_WS
-RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src -y
+RUN source /opt/ros/noetic/setup.bash && rosdep update
+RUN source /opt/ros/noetic/setup.bash && rosdep install --from-paths src --ignore-src -y
 RUN source /opt/ros/noetic/setup.bash && \
     catkin_make
     

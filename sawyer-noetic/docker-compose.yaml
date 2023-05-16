@@ -4,9 +4,9 @@ services:
     rosbridge_noetic_humble:
         privileged: true
         image: "unhcarl/sawyer-noetic:latest"
-        #network_mode: host
-        #ipc: host
-        #pid: host
+        network_mode: host
+        ipc: host
+        pid: host
         environment:
             - ROS_MASTER_URI=$ROS_MASTER_URI
             - ROS_IP=$ROS_IP

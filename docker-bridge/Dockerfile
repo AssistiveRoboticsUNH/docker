@@ -78,16 +78,16 @@ RUN cmake ..
 RUN make -j16 install
 
 # clone nav2
-WORKDIR /root/ros2_humble/src
-RUN git clone https://github.com/ros-planning/navigation2.git --branch humble
-RUN git clone https://github.com/ros/bond_core.git --branch ros2
-RUN git clone https://github.com/BehaviorTree/behaviortree_cpp_v3-release.git --branch release/humble/behaviortree_cpp_v3
-RUN git clone https://github.com/ros/diagnostics.git --branch ros2
-RUN git clone https://github.com/ros/angles.git --branch ros2
-RUN git clone https://github.com/ros-perception/vision_opencv.git --branch humble
-RUN git clone https://github.com/ompl/ompl.git --branch main
-RUN git clone https://github.com/SteveMacenski/slam_toolbox.git --branch humble
-RUN git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git --branch ros2
+#WORKDIR /root/ros2_humble/src
+#RUN git clone https://github.com/ros-planning/navigation2.git --branch humble
+#RUN git clone https://github.com/ros/bond_core.git --branch ros2
+#RUN git clone https://github.com/BehaviorTree/behaviortree_cpp_v3-release.git --branch release/humble/behaviortree_cpp_v3
+#RUN git clone https://github.com/ros/diagnostics.git --branch ros2
+#RUN git clone https://github.com/ros/angles.git --branch ros2
+#RUN git clone https://github.com/ros-perception/vision_opencv.git --branch humble
+#RUN git clone https://github.com/ompl/ompl.git --branch main
+#RUN git clone https://github.com/SteveMacenski/slam_toolbox.git --branch humble
+#RUN git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git --branch ros2
 
 # run rosdep again
 WORKDIR /root/ros2_humble
@@ -102,7 +102,7 @@ RUN /root/ros2_humble/install/setup.bash & colcon build --symlink-install --cmak
 # ros1_bridge
 SHELL ["/bin/bash", "-c"]
 WORKDIR /root/ros2_humble/src
-RUN git clone https://github.com/ros2/ros1_bridge
+RUN git clone https://github.com/AssistiveRoboticsUNH/ros1_bridge.git
 WORKDIR /root/ros2_humble
 RUN source /opt/ros/noetic/setup.bash  \
     && source /root/ros2_humble/install/setup.bash  \
@@ -118,6 +118,8 @@ RUN apt-get install iputils-ping -y
 RUN apt-get install nautilus -y
 RUN apt-get install vim -y
 RUN adduser root dialout
+
+RUN rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
