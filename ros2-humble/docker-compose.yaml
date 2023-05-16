@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+        
+        
+services:
+    rosbridge_noetic_humble:
+        privileged: true
+        image: "osrf/ros:humble-desktop-full"
+        networks:
+            my_network:
+                ipv4_address: 192.168.1.61
+        environment:
+            - ROS_MASTER_URI=$ROS_MASTER_URI
+            - ROS_IP=$ROS_IP
+            - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+            - DISPLAY=$DISPLAY
+        volumes:
+            - /tmp/.X11-unix/:/tmp/.X11-unix/
+        tty: true
+        
