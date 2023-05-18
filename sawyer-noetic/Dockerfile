@@ -1,27 +1,37 @@
 FROM unhcarl/rosbridge-noetic-humble:latest
 SHELL ["/bin/bash", "-c"]
 
-# install ros package
-RUN apt-get update 
-      # && apt-get install -y \
-      #ros-noetic-demo-nodes-cpp \
-      #ros-noetic-demo-nodes-py && \
+RUN apt update
 
-RUN apt install git -y
+# ros2 intera messages
+WORKDIR /root/ros2_humble/src
+RUN git clone https://github.com/AssistiveRoboticsUNH/sawyer_robot_ros2.git
+WORKDIR /root/ros2_humble
+RUN source /root/ros2_humble/install/setup.bash  \
+    && colcon build --symlink-install --packages-select intera_core_msgs --cmake-args -DBUILD_TESTING=OFF
+
 
 # clone source
-ENV ROS_WS /home/sawyer_ws
-RUN mkdir -p $ROS_WS/src
-WORKDIR $ROS_WS/src
+ENV ROS1_WS /home/sawyer_ws
+RUN mkdir -p $ROS1_WS/src
+WORKDIR $ROS1_WS/src
 RUN git clone -b master https://github.com/RethinkRobotics/sawyer_robot.git
 RUN git clone -b master https://github.com/RethinkRobotics/intera_sdk.git
 RUN git clone -b master https://github.com/RethinkRobotics/intera_common.git
 RUN git clone -b main https://github.com/ros-drivers/joystick_drivers.git
-WORKDIR $ROS_WS
+WORKDIR $ROS1_WS
 RUN source /opt/ros/noetic/setup.bash && rosdep update
 RUN source /opt/ros/noetic/setup.bash && rosdep install --from-paths src --ignore-src -y
 RUN source /opt/ros/noetic/setup.bash && \
     catkin_make
+
+# rebuild ros1_bridge
+WORKDIR /root/ros2_humble
+RUN rm -r build/ros1_bridge
+RUN rm -r install/ros1_bridge
+RUN source $ROS1_WS/devel/setup.bash  \
+    && source /root/ros2_humble/install/setup.bash  \
+    && colcon build --symlink-install --packages-select ros1_bridge --cmake-args -DBUILD_TESTING=OFF
     
 RUN apt install nano -y
 RUN apt install vim -y
