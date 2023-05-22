@@ -8,9 +8,21 @@ RUN mkdir -p $ROS_WS/src
 WORKDIR $ROS_WS/src
 RUN git clone https://github.com/AssistiveRoboticsUNH/smart-home.git
 WORKDIR smart-home
-RUN git checkout ros2
+RUN git checkout ros_jackal
 RUN vcs import < external.repos.yaml
 WORKDIR $ROS_WS
+
+# for rviz visualization
+RUN apt update
+RUN apt install python3-pip -y
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:kisak/kisak-mesa
+RUN apt update
+RUN apt upgrade -y
+
+# pip dependencies
+RUN pip3 install tqdm
+RUN pip3 install opencv-contrib-python
 
 # get dependencies
 RUN apt update
@@ -28,6 +40,9 @@ RUN apt install tmux -y
 RUN apt-get install iputils-ping -y
 RUN adduser root dialout
 COPY ros_entrypoint.sh /
+RUN rm -rf /var/lib/apt/lists/*
+
+COPY smart_home_launch.bash /tmp/smart_home_launch.bash
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]

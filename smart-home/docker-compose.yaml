@@ -1,0 +1,33 @@
+version: '3'
+services:
+    smart-home-noetic:
+        privileged: true
+        image: "unhcarl/smart_home:latest"
+        network_mode: host
+        environment:
+            - TWILIO_TOKEN=$TWILIO_TOKEN
+            - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
+            - SMARTTHINGS_TOKEN=$SMARTTHINGS_TOKEN
+            - TAPO_CAMERA_PASS=$TAPO_CAMERA_PASS
+            - ROS_MASTER_URI=$ROS_MASTER_URI
+            - ROS_IP=$ROS_IP
+            - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+            - DISPLAY=$DISPLAY
+            - FASTRTPS_DEFAULT_PROFILES_FILE=/profile/fastrtps_default_profiles.xml
+        #ipc: host
+        volumes:
+            - /tmp/.X11-unix/:/tmp/.X11-unix/
+            - ./profile:/profile
+        #tty: true
+        command: /tmp/smart_home_launch.bash 
+        # access to 1 GPU device
+        #command: nvidia-smi
+        deploy:
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  count: 1
+                  capabilities: [gpu]
+
+
