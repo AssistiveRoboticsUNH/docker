@@ -5,6 +5,7 @@ services:
         image: "unhcarl/smart_home:latest"
         network_mode: host
         environment:
+            - PULSE_SERVER=tcp:host.docker.internal:4713
             - TWILIO_TOKEN=$TWILIO_TOKEN
             - TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID
             - SMARTTHINGS_TOKEN=$SMARTTHINGS_TOKEN
