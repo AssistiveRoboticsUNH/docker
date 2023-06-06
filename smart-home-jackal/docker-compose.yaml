@@ -2,7 +2,7 @@ version: '3'
 services:
     smart-home-noetic:
         privileged: true
-        image: "unhcarl/smart-home-jackal:latest"
+        image: "unhcarl/smart_home_jackal:latest"
         network_mode: host
         environment:
             - PULSE_SERVER=tcp:host.docker.internal:4713

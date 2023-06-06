@@ -34,6 +34,11 @@ RUN pip3 install pysmartthings
 RUN pip3 install pyzmq
 RUN pip3 install mediapipe
 
+# pip dependencies for deepfake
+RUN pip3 install elevenlabslib
+RUN apt-get install libportaudio2
+RUN pip3 install playsound
+
 
 # get dependencies
 RUN apt update
