@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/smart-home/install/setup.bash
+source /home/smart_home_ws/install/setup.bash
 
 sleep 1
 ros2 launch shr_plan real_robot.launch.py &

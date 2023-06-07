@@ -27,6 +27,8 @@ RUN apt upgrade -y
 RUN apt install nano
 RUN apt-get install ros-humble-rqt
 
+RUN apt-get install python3-dev libffi-dev libssl-dev libudev-dev
+
 # pip dependencies
 RUN pip3 install tqdm
 RUN pip3 install opencv-contrib-python
@@ -38,6 +40,7 @@ RUN pip3 install mediapipe
 RUN pip3 install elevenlabslib
 RUN apt-get install libportaudio2
 RUN pip3 install playsound
+RUN pip3 install mediapipe
 
 
 # get dependencies
@@ -59,7 +62,7 @@ RUN sudo sed -i 's/geteuid/getppid/' /usr/bin/vlc
 COPY ros_entrypoint.sh /
 RUN rm -rf /var/lib/apt/lists/*
 
-COPY smart_home_launch.bash /tmp/smart_home_launch.bash
+#COPY smart_home_launch.bash /tmp/smart_home_launch.bash
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]
