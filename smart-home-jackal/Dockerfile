@@ -34,7 +34,7 @@ RUN pip3 install tqdm
 RUN pip3 install opencv-contrib-python
 RUN pip3 install pysmartthings
 RUN pip3 install pyzmq
-RUN pip3 install mediapipe
+
 
 # pip dependencies for deepfake
 RUN pip3 install elevenlabslib

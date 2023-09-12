@@ -1,8 +1,8 @@
 version: '3'
 services:
-    smart-home-noetic:
+    smart-home-ros2:
         privileged: true
-        image: "unhcarl/smart_home:latest"
+        image: "unhcarl/smart_home_jackal_new_controller"
         network_mode: host
         environment:
             - PULSE_SERVER=tcp:host.docker.internal:4713
@@ -13,8 +13,8 @@ services:
             - ROS_MASTER_URI=$ROS_MASTER_URI
             - ROS_IP=$ROS_IP
             - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
-            - DISPLAY=$DISPLAY
             - APIKEY=$APIKEY
+            - DISPLAY=$DISPLAY
             - FASTRTPS_DEFAULT_PROFILES_FILE=/profile/fastrtps_default_profiles.xml
         volumes:
             - /tmp/.X11-unix/:/tmp/.X11-unix/
